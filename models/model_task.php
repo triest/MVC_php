@@ -5,7 +5,7 @@
     {
 
         protected $table = "tasks";
-
+        public $id = null;
         public $name;
         public $email;
         public $text;
@@ -50,6 +50,9 @@
         {
             global $mysqli;
 
+            if ($this["id"] != null) {
+                $this->update();
+            }
 
             $sql = 'INSERT INTO `tasks`( `name`, `email`, `text`) VALUES ("' . $this->name . '","' . $this->email . '","' . $this->text . '")';
             if (!$result = $mysqli->query($sql)) {
@@ -63,7 +66,7 @@
         {
             global $mysqli;
             if ($stmt = $mysqli->prepare("UPDATE `tasks` SET `text` = ?,`name`=?,`email`=?,`status`=? WHERE `tasks`.`id` = ?")) {
-                $stmt->bind_param('sssii',$this->text,$this->name,$this->email,$this->status,$this->id);
+                $stmt->bind_param('sssii', $this->text, $this->name, $this->email, $this->status, $this->id);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 return $result;

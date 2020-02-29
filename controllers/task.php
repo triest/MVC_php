@@ -39,16 +39,18 @@
         {
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                  $task=Model_Task::get(intval($_GET['id']));
-                  var_dump($task);
+                $task = Model_Task::get(intval($_GET['id']));
 
-                  $task->name=$_POST["title"];
-                  $task->text=$_POST["text"];
-                  if($_POST["status"]=="on"){
-                      $task->status=1;
-                  }else{
-                      $task->status=1;
-                  }
+                $task->name = $_POST["title"];
+                $task->text = $_POST["text"];
+                if ($_POST["status"] == "on") {
+                    $task->status = 1;
+                } else {
+                    $task->status = 1;
+                }
+                $task->update();
+                $this->template->vars('task', $task);
+                $this->template->view('edit');
 
             } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 if (!isset($_GET["id"])) {
