@@ -2,12 +2,13 @@
 <div class="container">
     <div class="row">
         <?
-            echo "auth_user: " . var_dump($_SESSION["auth_user"]);
-            global $userauth;
-            if($userauth==null){
+            var_dump($_SESSION);
+            var_dump($_SESSION['auth_user']);
+
+            if ($_SESSION['auth_user'] == "" || $_SESSION['auth_user'] == null) {
                 ?>
-                    <a href="/login/">Войдите</a>
-        <?
+                <a href="/login/">Login</a>
+                <?
             }
         ?>
         <?php

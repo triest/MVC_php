@@ -25,7 +25,8 @@
                 $password = $_POST["password"];
                 $user = new Model_Users();
                 $user->login($email, $password);
-                echo "auth_user: " . $_SESSION["auth_user"];
+                header("Location: /");
+
             } else {
                 $this->template->view('login');
             }

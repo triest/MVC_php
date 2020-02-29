@@ -17,15 +17,23 @@
     $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
     global $userauth;
-    $userauth = null;
 
-    $_SESSION['auth_user'] = null;
+
+   // $userauth = null;
+
+   // $_SESSION['auth_user'] = null;
 
 // Загружаем router
     $router = new Router($registry);
+    session_start();
 // записываем данные в реестр
     $registry->set('router', $router);
 // задаем путь до папки контроллеров.
     $router->setPath(SITE_PATH . 'controllers');
+
 // запускаем маршрутизатор
+
+
     $router->start();
+
+
