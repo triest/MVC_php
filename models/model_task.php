@@ -26,7 +26,7 @@
         {
             global $mysqli;
 
-            if ($stmt = $mysqli->prepare("select `id`,`name`,`text`,`email` from `tasks` where `id`=? limit 1")) {
+            if ($stmt = $mysqli->prepare("select `id`,`name`,`text`,`email`,`status` from `tasks` where `id`=? limit 1")) {
                 $stmt->bind_param('s', $id);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -37,6 +37,7 @@
                         $task->name = $row["name"];
                         $task->email = $row["email"];
                         $task->text = $row["text"];
+                        $task->status = $row["status"];
                     }
                     return $task;
                 }
@@ -56,6 +57,18 @@
             } else {
                 return true;
             }
+        }
+
+        public function update()
+        {
+            global $mysqli;
+            if ($stmt = $mysqli->prepare("UPDATE `tasks` SET `text` = ?,`name`=?,`email`=?,`status`=? WHERE `tasks`.`id` = ?")) {
+                $stmt->bind_param('sssii',$this->text,$this->name,$this->email,$this->status,$this->id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                return $result;
+            }
+            return false;
         }
 
 
