@@ -50,9 +50,14 @@
         {
             global $mysqli;
 
-            if ($this["id"] != null) {
-                $this->update();
+            if (!$this->validate()) {
+                return "falidate_fali";
             }
+
+            if ($this->id != null) {
+                return $this->update();
+            }
+
 
             $sql = 'INSERT INTO `tasks`( `name`, `email`, `text`) VALUES ("' . $this->name . '","' . $this->email . '","' . $this->text . '")';
             if (!$result = $mysqli->query($sql)) {
@@ -64,6 +69,10 @@
 
         public function update()
         {
+            if (!$this->validate()) {
+                return "falidate_fali";
+            }
+
             global $mysqli;
             if ($stmt = $mysqli->prepare("UPDATE `tasks` SET `text` = ?,`name`=?,`email`=?,`status`=? WHERE `tasks`.`id` = ?")) {
                 $stmt->bind_param('sssii', $this->text, $this->name, $this->email, $this->status, $this->id);
@@ -72,6 +81,15 @@
                 return $result;
             }
             return false;
+        }
+
+        private function validate()
+        {
+            if ($this->name != "" && $this->name != null && $this->email != null && $this->email != "" && $this->text != "" && $this->text != null) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
 

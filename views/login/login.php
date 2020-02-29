@@ -10,7 +10,7 @@
 <form action="/login" method="post" >
     <label> Email</label>
     <input type="text" id="email" name="email"><br>
-    <label> Password</label>
+    <label> Пароль:</label>
     <input type="text" id="password" name="password"><br>
     <input type="submit">
 </form>

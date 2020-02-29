@@ -13,6 +13,14 @@
             $this->template->view('index');
         }
 
+        function view()
+        {
+            $task = Model_Task::get(intval($_GET['id']));
+            var_dump($task);
+            $this->template->vars('task', $task);
+            $this->template->view('view');
+        }
+
         function create()
         {
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,7 +34,9 @@
                 }
 
                 $model = new Model_Task($title, null, $text);
-                $model->save();
+                if ($model->save() == true) {
+
+                }
 
 
             } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -48,7 +58,8 @@
                 } else {
                     $task->status = 1;
                 }
-                $task->update();
+                //  $task->update();
+                $task->save();
                 $this->template->vars('task', $task);
                 $this->template->view('edit');
 
