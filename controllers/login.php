@@ -32,5 +32,12 @@
             }
         }
 
+        function logout()
+        {
+            $_SESSION['auth_user'] = "";
+
+            header("Location: /");
+        }
+
 
     }
