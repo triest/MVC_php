@@ -207,7 +207,6 @@
             $pass = md5($pass);
             if ($login == $user->name && $pass == $user->password) {
                 $_SESSION['auth_user'] = $login;
-                var_dump($_SESSION['auth_user']);
                 return true;
             }
             return false;

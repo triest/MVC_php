@@ -16,10 +16,10 @@
         function view()
         {
             $task = Model_Task::get(intval($_GET['id']));
-            if(isset($_GET["page"])) {
-                $page =$_GET["page"];
-                    }else{
-                $page=1;
+            if (isset($_GET["page"])) {
+                $page = $_GET["page"];
+            } else {
+                $page = 1;
             }
             $this->template->vars('task', $task);
             $this->template->vars('page', $page);
@@ -44,19 +44,47 @@
 
 
                 $model = new Model_Task($title, $email, $text);
-                if ($model->save() == true) {
+                $save = $model->save();
 
+
+                if ($save==false) {
+                    if (isset($_GET["page"])) {
+                        $page = $_GET["page"];
+                    } else {
+                        $page = 1;
+                    }
+
+                    $this->template->vars('page', $page);
+                    $this->template->vars('error', $save);
+                    $this->template->view('create');
+                } else {
+                   // header("/task/view?id=$save");
+
+                    header('HTTP/1.1 301 Moved Permanently');
+                    header('Location: /task/view?id='.$save);
+                    exit();
                 }
 
 
             } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
-
+                if (isset($_GET["page"])) {
+                    $page = $_GET["page"];
+                } else {
+                    $page = 1;
+                }
+                $this->template->vars('page', $page);
+                $this->template->vars('save', true);
                 $this->template->view('create');
             }
         }
 
         function edit()
         {
+            if (isset($_GET["page"])) {
+                $page = $_GET["page"];
+            } else {
+                $page = 1;
+            }
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $task = Model_Task::get(intval($_GET['id']));
@@ -72,18 +100,13 @@
                 //  $task->update();
                 $task->save();
                 $this->template->vars('task', $task);
+                $this->template->vars('page', $page);
                 $this->template->view('edit');
 
             } elseif ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 if (!isset($_GET["id"])) {
 
                 }
-                if(isset($_GET["page"])) {
-                    $page =$_GET["page"];
-                }else{
-                    $page=1;
-                }
-
                 $task = Model_Task::get(intval($_GET["id"]));
                 $this->template->vars('task', $task);
                 $this->template->vars('page', $page);

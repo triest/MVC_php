@@ -25,6 +25,7 @@
 
 // Загружаем router
     $router = new Router($registry);
+    ob_start();
     session_start();
 // записываем данные в реестр
     $registry->set('router', $router);

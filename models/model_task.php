@@ -51,7 +51,7 @@
             global $mysqli;
 
             if (!$this->validate()) {
-                return "falidate_fali";
+                return $this->validate();
             }
 
             if ($this->id != null) {
@@ -63,14 +63,15 @@
             if (!$result = $mysqli->query($sql)) {
                 return false;
             } else {
-                return true;
+
+                return   $mysqli->insert_id;;
             }
         }
 
         public function update()
         {
             if (!$this->validate()) {
-                return "falidate_fali";
+                return $this->validate();
             }
 
             global $mysqli;
@@ -86,6 +87,11 @@
         private function validate()
         {
             if ($this->name != "" && $this->name != null && $this->email != null && $this->email != "" && $this->text != "" && $this->text != null) {
+
+                if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+                    return false;
+                }
+
                 return true;
             } else {
                 return false;
