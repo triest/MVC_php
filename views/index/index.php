@@ -2,9 +2,10 @@
 <div class="container">
     <table class="table">
         <thead>
-        <th>Название</th>
+        <th><a href="/?"></a> Название</th>
         <th>email</th>
-        <th>статус</th>
+        <th>выполненно</th>
+        <th>отредактировано администратором</th>
         </thead>
         <tbody>
         <? foreach ($tasks as $item) {
@@ -17,6 +18,13 @@
                         echo "нет";
                     } else {
                         echo "да";
+                    } ?>
+                </td>
+                <td>
+                    <? if ($item->edit == 1) {
+                        echo "да";
+                    } else {
+                        echo "нет";
                     } ?>
                 </td>
                 <? if ($_SESSION['auth_user'] == "admin") { ?>

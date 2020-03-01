@@ -10,6 +10,7 @@
         public $email;
         public $text;
         public $status;
+        public $edit=0;
 
         /**
          * Model_Tasks constructor.
@@ -26,7 +27,7 @@
         {
             global $mysqli;
 
-            if ($stmt = $mysqli->prepare("select `id`,`name`,`text`,`email`,`status` from `tasks` where `id`=? limit 1")) {
+            if ($stmt = $mysqli->prepare("select `id`,`name`,`text`,`email`,`status`,`edit` from `tasks` where `id`=? limit 1")) {
                 $stmt->bind_param('s', $id);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -38,6 +39,7 @@
                         $task->email = $row["email"];
                         $task->text = $row["text"];
                         $task->status = $row["status"];
+                        $task->edit = $row["edit"];
                     }
                     return $task;
                 }
@@ -75,8 +77,8 @@
             }
 
             global $mysqli;
-            if ($stmt = $mysqli->prepare("UPDATE `tasks` SET `text` = ?,`name`=?,`email`=?,`status`=? WHERE `tasks`.`id` = ?")) {
-                $stmt->bind_param('sssii', $this->text, $this->name, $this->email, $this->status, $this->id);
+            if ($stmt = $mysqli->prepare("UPDATE `tasks` SET `text` = ?,`name`=?,`email`=?,`status`=?,`edit`=? WHERE `tasks`.`id` = ?")) {
+                $stmt->bind_param('sssiii', $this->text, $this->name, $this->email, $this->status, $this->edit,$this->id);
                 $stmt->execute();
                 $result = $stmt->get_result();
                 return $result;
@@ -91,7 +93,6 @@
                 if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
                     return false;
                 }
-
                 return true;
             } else {
                 return false;

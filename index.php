@@ -18,12 +18,6 @@
 
     global $userauth;
 
-
-   // $userauth = null;
-
-   // $_SESSION['auth_user'] = null;
-
-// Загружаем router
     $router = new Router($registry);
     ob_start();
     session_start();

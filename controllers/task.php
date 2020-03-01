@@ -28,6 +28,12 @@
 
         function create()
         {
+
+            if($_SESSION['auth_user'] == "" || $_SESSION['auth_user'] == null){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: /login');
+                exit();
+            }
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // The request is using the POST method
                 /**/
@@ -47,7 +53,7 @@
                 $save = $model->save();
 
 
-                if ($save==false) {
+                if ($save == false) {
                     if (isset($_GET["page"])) {
                         $page = $_GET["page"];
                     } else {
@@ -58,10 +64,10 @@
                     $this->template->vars('error', $save);
                     $this->template->view('create');
                 } else {
-                   // header("/task/view?id=$save");
+                    // header("/task/view?id=$save");
 
                     header('HTTP/1.1 301 Moved Permanently');
-                    header('Location: /task/view?id='.$save);
+                    header('Location: /task/view?id=' . $save);
                     exit();
                 }
 
@@ -80,6 +86,12 @@
 
         function edit()
         {
+            if($_SESSION['auth_user'] == "" || $_SESSION['auth_user'] == null){
+                header('HTTP/1.1 301 Moved Permanently');
+                header('Location: /login');
+                exit();
+            }
+
             if (isset($_GET["page"])) {
                 $page = $_GET["page"];
             } else {
@@ -90,12 +102,18 @@
                 $task = Model_Task::get(intval($_GET['id']));
 
                 $task->name = $_POST["title"];
+
+                if ($task->text != $_POST["text"]) {
+                    $task->edit = 1;
+                } else {
+                }
+
                 $task->text = $_POST["text"];
                 $task->email = $_POST["email"];
-                if ($_POST["status"] == "on") {
+                if (isset($_POST["status"]) && $_POST["status"] == "on") {
                     $task->status = 1;
                 } else {
-                    $task->status = 1;
+                    $task->status = 0;
                 }
                 //  $task->update();
                 $task->save();

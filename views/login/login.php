@@ -9,8 +9,9 @@
 
 <form action="/login" method="post" >
     <label> Email</label>
-    <input type="text" id="email" name="email"><br>
+    <input type="text" id="email" name="email" required><br>
     <label> Пароль:</label>
-    <input type="text" id="password" name="password"><br>
+    <input type="text" id="password" name="password" required><br>
     <input type="submit">
+    <a href="/">Назад</a>
 </form>
