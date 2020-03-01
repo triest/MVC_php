@@ -24,10 +24,23 @@
 
             global $mysqli;
 
-            $sql = "select * from tasks ";
+            if (isset($_GET["order"])) {
+                $sort = $_GET["order"];
+            } else {
+                $sort = "id";
+            }
+
+            if (isset($_GET["sort"])) {
+                $order = $_GET["sort"];
+            } else {
+                $order = "desc";
+            }
+
+            $sql = "select * from tasks order by $sort $order ";
             $sql .= "limit $this->on_page";
+
             if ($page != 1) {
-                $sql .= " offset " . strval($this->on_page * (int)$page - 1);
+                $sql .= " offset " . strval($this->on_page * ((int)$page - 1));
             }
 
 
@@ -48,6 +61,8 @@
             $this->template->vars('tasks', $task_array);
             $this->template->vars('num_pages', $num_pages);
             $this->template->vars('page', $page);
+            $this->template->vars('sort', $sort);
+            $this->template->vars('order', $order);
             $this->template->view('index');
         }
 

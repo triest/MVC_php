@@ -2,10 +2,14 @@
 <div class="container">
     <table class="table">
         <thead>
-        <th><a href="/?"></a> Название</th>
-        <th>email</th>
-        <th>выполненно</th>
-        <th>отредактировано администратором</th>
+        <th>
+            <a href="/?order=name<? if ($sort == "name" && $order == "desc") { ?>&sort=asc<? } elseif ($sort == "name" && $order == "acs") { ?>&sort=desc<? } ?>">
+                Название</a></th>
+        <th><a href="/?order=email<? if ($sort == "email" && $order == "desc") { ?>&sort=asc<? } ?>"">email</a></th>
+        <th><a href="/?order=status<? if ($sort == "status" && $order == "desc") { ?>&sort=asc<? } ?>"">выполненно</a>
+        </th>
+        <th><a href="/?order=edit<? if ($sort == "edit" && $order == "desc") { ?>&sort=asc<? } ?>"">отредактировано
+            администратором</a></th>
         </thead>
         <tbody>
         <? foreach ($tasks as $item) {
@@ -39,7 +43,9 @@
         for ($i = 1; $i <= $num_pages; $i++) {
             if ($i != $page) {
                 ?>
-                <a href="/?page=<?= $i ?>"> <?= $i ?></a>
+                <a href="/?page=<?= $i ?><? if (isset($sort)) { ?>&order=<?= $sort ?> <? } ?> <? if (isset($order)) { ?> &sort=<?= $order ?> <? } ?> ">
+
+                    <?= $i ?></a>
                 <?
             } else {
                 ?>
