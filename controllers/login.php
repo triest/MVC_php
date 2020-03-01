@@ -20,9 +20,11 @@
                 if($user->login($email, $password)){
                     header("Location: /");
                 }else{
-                    header("Location: /login");
+                    $this->template->vars('error', true);
+                    $this->template->view('login');
                 }
             } else {
+                $this->template->vars('error', false);
                 $this->template->view('login');
             }
         }
