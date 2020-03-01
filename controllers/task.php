@@ -106,6 +106,7 @@
                 if ($task->text != $_POST["text"]) {
                     $task->edit = 1;
                 } else {
+
                 }
 
                 $task->text = $_POST["text"];
@@ -115,6 +116,7 @@
                 } else {
                     $task->status = 0;
                 }
+                var_dump($task);
                 //  $task->update();
                 $task->save();
                 $this->template->vars('task', $task);

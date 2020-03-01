@@ -1,4 +1,4 @@
-<input type="button" onclick="window.location.href = '/task/create';" value="Создать задачу"/>
+<input type="button" class="btn btn-primary" onclick="window.location.href = '/task/create';" value="Создать задачу"/>
 <div class="container">
     <table class="table">
         <thead>
